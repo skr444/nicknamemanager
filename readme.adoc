@@ -1,0 +1,122 @@
+= NickNameManager
+:author: skr444
+:docdate: 
+:doctype: book
+:source-highlighter: rouge
+:revnumber: 1.2
+:description: This document describes the NickNameManager Powershell module.
+:keywords: powershell, module, nicknamemanager
+:toc: right
+:toclevels: 3
+:sectnums:
+:sectnumlevels: 5
+:chapter-label:
+
+:url-git-repository: https://github.com/skr444/nicknamemanager.git
+:url-z-module: https://github.com/badmotorfinger/z
+:url-ps-profile-docs: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.2
+
+*[big]#Revision History#*
+
+[cols="2,1,1,4"]
+|===
+| Author | Version | Date | Description
+
+| skr444
+| 1.2
+| 2022-07-27
+| Updated <<Changes>>.
+
+| skr444
+| 1.1
+| 2022-02-09
+| Added change list <<Changes>>.
+
+| skr444
+| 1.0
+| 2022-01-29
+| Created document.
+|===
+
+== NickNameManager
+
+Project URL:: {url-git-repository}
+Latest stable version:: 3.1.0
+Minimum Powershell version:: 5.1
+
+=== Abstract
+
+This module is the successor of the `ch2.ps1` script, which was converted into a Powershell module as a training exercise.
+The `ch2.ps1` script was created to make a very simple path shortcut navigation.
+While it was fun to make and is still used occasionally, it does not hand the torch to the excellent {url-z-module}[z module] from badmotorfinger, which I highly recommend if you like Powershell.
+
+=== Features
+
+- Allows creation, management and usage of user defined path aliases.
+- Stores path aliases in a user defined text file.
+- Offers convenience functions for easier shell navigation.
+- Works on Windows and Linux.
+- Supported path placeholders:
+** `{user}` will be replaced with the current user name.
+** `{<SpecialFolder>}` will be resolved with the path defined by <<SpecialFolder>>.
+
+==== SpecialFolder
+
+All the `Environment.SpecialFolder` values are supported as placeholders and can be resolved by the module.
+Check the available values with:
+
+[.big]
+[source,powershell,linenums]
+----
+[System.Enum]::GetNames([System.Environment+SpecialFolder])
+----
+
+Check the `samples/nicknames.txt` file for an example.
+
+=== Installation
+
+. Run the build script.
+. Decide which {url-ps-profile-docs}[Powershell profile] you want to install this module in.
+  - Find available Powershell module locations with `$Env:PSModulePath -split ';'`
+. Copy the entire output folder `NickNameManager` to the chosen module folder.
+  - See the module available for import with `Get-Module -ListAvailable`.
+. Open a Powershell console and import the module with `Import-Module -Name NickNameManager`.
+  - The module will only be available for the duration of the session.
+. Use the `Add-NickNameManagerToProfile` cmdlet to make the module available for future sessions.
+  - This cmdlet is only available when the module has been imported into the current session.
+
+==== Customization
+
+- Optionally import your nick name entries from an old script (e.g. `ch2.ps1`) or other file using the `Import-NickNames` cmdlet.
+- Change the storage file path by adding `$NickNameStoreFullpath = "<my-custom-path>"` to the profile after the import instruction.
+
+=== Known bugs
+
+None at the moment.
+
+=== Changes
+
+Please keep latest changes at the top.
+
+[cols="1,1,5a"]
+|===
+| Date | Version | Changes
+
+| 2022-07-27
+| 3.1.0
+| Added new feature: Special folder resolver
+
+  - Allows starting a path with a special folder placeholder.
+  - Refactored folder resolution function to allow adding more placeholder types.
+
+| 2022-02-09
+| 3.0.1
+| Replaced `Get-Partition` in the `Get-LocalDriveLetters` function with `Get-PSDrive` because:
+  
+  - `Get-Partition` is not Powershell 7 compatible.
+  - `Get-PSDrive` is Powershell 7 compatible and works on Linux.
+
+| 2022-01-29
+| 3.0.0
+| Initial version of `ch2.ps1` as a module.
+|===

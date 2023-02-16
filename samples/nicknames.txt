@@ -1,0 +1,7 @@
+D:\playground=pg;playground
+C:\Users\{user}=ud;udata;userdata
+D:\repos=r;repos
+C:\Program Files (x86)=pf;pfiles;programfiles
+C:\ProgramData=pd;pdata;programdata
+C:\Program Files=pf64;pfiles64;programfiles64
+{MyDocuments}\WindowsPowerShell=psusrprof;ps-usr-prof;psuserprof;ps-user-prof;ps-user-profile
